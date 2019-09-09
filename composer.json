@@ -1,0 +1,44 @@
+{
+    "name": "bokt/flarum-redis",
+    "description": "Adds Redis cache and queue to Flarum",
+    "keywords": [
+        "extension",
+        "flarum", "bokt",
+        "queue", "cache", "redis"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniël Klabbers",
+            "email": "daniel@klabbers.email",
+            "homepage": "http://luceos.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/bokt/flarum-redis/issues",
+        "source": "https://github.com/bokt/flarum-redis"
+    },
+    "require": {
+        "flarum/core": "^0.1.0-beta.10",
+        "illuminate/redis": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bokt\\Redis\\": "src/"
+        }
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "Redis",
+            "icon": {
+                "image": "resources/logo.svg",
+                "backgroundColor": "#ffffff",
+                "color": "#3a98d0",
+                "backgroundSize": "90%",
+                "backgroundRepeat": "no-repeat",
+                "backgroundPosition": "center"
+            }
+        }
+    }
+}
