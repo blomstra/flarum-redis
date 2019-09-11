@@ -16,13 +16,12 @@ class Queue extends Provider
             /** @var Manager $manager */
             $manager = $app->make(Manager::class);
 
-            $manager->addConnection('queue', $config = $configuration->toArray());
+            $manager->addConnection('default', $config = $configuration->toArray());
 
-            return new RedisQueue(
-                $manager,
-                'default',
-                'queue'
-            );
+            $queue = new RedisQueue($manager);
+            $queue->setContainer($app);
+
+            return $queue;
         });
     }
 }

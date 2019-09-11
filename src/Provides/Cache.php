@@ -17,12 +17,11 @@ class Cache extends Provider
             /** @var Manager $manager */
             $manager = $app->make(Manager::class);
 
-            $manager->addConnection('cache', $config = $configuration->toArray());
+            $manager->addConnection('default', $config = $configuration->toArray());
 
             $store = new RedisStore(
                 $manager,
-                Arr::get($config, 'prefix', ''),
-                'cache'
+                Arr::get($config, 'prefix', '')
             );
 
             return new Repository($store);
