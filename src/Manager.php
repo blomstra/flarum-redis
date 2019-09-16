@@ -12,4 +12,9 @@ class Manager extends RedisManager
 
         return $this;
     }
+
+    public function getConnectionConfig(string $name = 'default'): ?array
+    {
+        return $this->config[$name] ?? null;
+    }
 }
