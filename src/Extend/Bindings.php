@@ -10,12 +10,18 @@ use Illuminate\Contracts\Redis\Factory;
 
 class Bindings implements ExtenderInterface
 {
+    protected static $bound = false;
+
     public function extend(Container $container, Extension $extension = null)
     {
-        $container->singleton(Manager::class, function ($app) {
-            return new Manager($app, 'predis', []);
-        });
+        if (static::$bound === false) {
+            $container->singleton(Manager::class, function ($app) {
+                return new Manager($app, 'predis', []);
+            });
 
-        $container->alias(Manager::class, Factory::class);
+            $container->alias(Manager::class, Factory::class);
+
+            static::$bound = true;
+        }
     }
 }
