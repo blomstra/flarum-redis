@@ -73,7 +73,7 @@ class Queue extends Provider
         $cache = app('cache.store');
 
         $queues = $cache->get('bokt.queue.queues-seen') ?? [];
-        $queues = array_merge($queues, [$event->queue]);
+        $queues = array_merge($queues, (array) explode(',', $event->queue));
         $cache->put('bokt.queue.queues-seen', array_unique($queues), 60);
     }
 }
