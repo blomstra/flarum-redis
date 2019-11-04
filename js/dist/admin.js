@@ -137,7 +137,7 @@ flarum_app__WEBPACK_IMPORTED_MODULE_0___default.a.initializers.add('bokt-redis',
 
       var queue = _ref;
       var load = loads[queue] || null;
-      items.add('bokt-queue-size-' + queue, [m("strong", null, "Queue ", queue), m("br", null), load || 'unknown']);
+      items.add('bokt-queue-size-' + queue, [m("strong", null, "Queue ", queue), m("br", null), load || '0']);
     }
   });
 });
