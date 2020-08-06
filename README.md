@@ -1,42 +1,84 @@
-# Redis cache and queue
+# Redis cache & queues
 
-This extension allows switching the Flarum native file cache and sync queue with
-a redis based cache and queue.
+This extension allows using Redis as cache or for the queue. You can only enable the queue or cache by using a local extender (the `extend.php` in the root of your Flarum installation). See the configuring section below.
 
-## Installation
+> This is an advanced extension for webmasters able to configure redis and the queue workers.
 
-Use Bazaar or install using composer:
+### Installation
+Use [Bazaar](https://discuss.flarum.org/d/5151-flagrow-bazaar-the-extension-marketplace) or install manually with composer:
 
-```bash
-$ composer require bokt/flarum-redis
+```sh
+composer require bokt/flarum-redis
 ```
 
-After that enable the extension in your admin area.
+#### Configuring cache
 
-## Configuration
+In your `extend.php`:
 
-In your local `extend.php` you need to decide what you want to use:
+```php
+
+return [
+    new Bokt\Redis\Extend\EnableRedisCache([
+        'host' => '127.0.0.1',
+        'password' => null,
+        'port' => 6379,
+        'database' => 1,
+    ]),
+];
+```
+
+This will immediately override the Flarum cache to use redis.
+
+#### Configuring queue
+
+In your `extend.php`:
+
+```php
+return [
+    new Bokt\Redis\Extend\EnableRedisQueue([
+        'host' => '127.0.0.1',
+        'password' => null,
+        'port' => 6379,
+        'database' => 1,
+    ]),
+];
+```
+
+Make sure to start your queue workers, see the [laravel documentation](https://laravel.com/docs/5.7/queues#running-the-queue-worker) for specifics. To test the worker can start use `php flarum queue:work`.
+
+If you choose to enable the queue a load counter will show up on the admin dashboard for all queues used in your queue workers.
+
+### Updating
+
+```sh
+composer update bokt/flarum-redis
+```
+
+### Links
+
+- [Packagist](https://packagist.org/packages/bokt/flarum-redis)
+- [GitHub](https://github.com/bokt/flarum-redis)
+
+### Disclaimer
+
+This extension is developed as an employee of @BartVB at Bokt. Bokt is the largest equine community in the Netherlands. We're currently moving a phpBB forum with over 100 million posts to Flarum. By keeping both in sync until we're more feature complete, we offer our users a slow transition to this fantastic new platform.
+
+### Simplify the extend
+
+You can combine the configuration array if you use both cache and queue:
 
 ```php
 return [
     new Bokt\Redis\Extend\EnableRedisCache($config = [
-        'url' => env('REDIS_URL'),
-        'host' => env('REDIS_HOST', '127.0.0.1'),
-        'password' => env('REDIS_PASSWORD', null),
-        'port' => env('REDIS_PORT', 6379),
-        'database' => env('REDIS_CACHE_DB', 1),
+        'host' => '127.0.0.1',
+        'password' => null,
+        'port' => 6379,
+        'database' => 1,
     ]),
     new Bokt\Redis\Extend\EnableRedisQueue($config),
 ];
 ```
 
-You can use different configs for cache and queue. But you can also
-point at a file:
+### Complex configuration
 
-```php
-return [
-    new Bokt\Redis\Extend\EnableRedisCache('cache.php'),
-    new Bokt\Redis\Extend\EnableRedisQueue('queue.php'),
-];
-```
-Make sure the file returns an array containing the configuration.
+The configuration used is identical to the one used in Laravel, check the Laravel redis configuration for more information if you need to do some finetuning.
