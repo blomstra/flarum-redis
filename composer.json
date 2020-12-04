@@ -20,8 +20,9 @@
         "source": "https://github.com/bokt/flarum-redis"
     },
     "require": {
-        "flarum/core": "^0.1.0-beta.10",
-        "illuminate/redis": "*"
+        "flarum/core": "0.1.0-beta.15",
+        "illuminate/redis": "*",
+        "predis/predis": "*"
     },
     "autoload": {
         "psr-4": {
