@@ -22,8 +22,8 @@ class Cache extends Provider
         });
 
         $container->bind('cache.store', function ($app) use ($configuration) {
-            /** @var Manager $manager */
-            $manager = $app->make(Manager::class);
+            /** @var RedisManager $manager */
+            $manager = $app->make(RedisManager::class);
 
             $store = new RedisStore(
                 $manager,

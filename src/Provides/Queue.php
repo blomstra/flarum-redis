@@ -27,7 +27,7 @@ class Queue extends Provider
         });
 
         $container->bind('flarum.queue.connection', function ($app) {
-            /** @var Manager $manager */
+            /** @var RedisManager $manager */
             $manager = $app->make(Factory::class);
 
             $queue = new RedisQueue($manager, $this->connection);
