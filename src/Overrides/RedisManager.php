@@ -1,10 +1,10 @@
-<?php
+<?php /** @noinspection PhpHierarchyChecksInspection */
 
-namespace Bokt\Redis;
+namespace Bokt\Redis\Overrides;
 
-use Illuminate\Redis\RedisManager;
+use Illuminate\Redis\RedisManager as IlluminateManager;
 
-class Manager extends RedisManager
+class RedisManager extends IlluminateManager
 {
     public function addConnection(string $name, array $config)
     {

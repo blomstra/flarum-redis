@@ -2,7 +2,7 @@
 
 namespace Bokt\Redis\Extend;
 
-use Bokt\Redis\Manager;
+use Bokt\Redis\Overrides\RedisManager;
 use Flarum\Extend\ExtenderInterface;
 use Flarum\Extension\Extension;
 use Illuminate\Contracts\Container\Container;
@@ -15,11 +15,11 @@ class Bindings implements ExtenderInterface
     public function extend(Container $container, Extension $extension = null)
     {
         if (static::$bound === false) {
-            $container->singleton(Manager::class, function ($app) {
-                return new Manager($app, 'predis', []);
+            $container->singleton(RedisManager::class, function ($app) {
+                return new RedisManager($app, 'predis', []);
             });
 
-            $container->alias(Manager::class, Factory::class);
+            $container->alias(RedisManager::class, Factory::class);
 
             static::$bound = true;
         }

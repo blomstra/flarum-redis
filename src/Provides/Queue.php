@@ -4,6 +4,7 @@ namespace Bokt\Redis\Provides;
 
 use Bokt\Redis\Configuration;
 use Bokt\Redis\Manager;
+use Bokt\Redis\Overrides\RedisManager;
 use Flarum\Extend\Frontend;
 use Flarum\Extension\ExtensionManager;
 use Flarum\Frontend\Document;
@@ -17,12 +18,19 @@ use Illuminate\Contracts\Queue\Queue as QueueContract;
 
 class Queue extends Provider
 {
+    private $connection = 'default';
+
     public function __invoke(Configuration $configuration, Container $container)
     {
+        $container->resolving(Factory::class, function (RedisManager $manager) use ($configuration) {
+            $manager->addConnection($this->connection, $configuration->toArray());
+        });
+
         $container->bind('flarum.queue.connection', function ($app) {
             /** @var Manager $manager */
             $manager = $app->make(Factory::class);
-            $queue = new RedisQueue($manager);
+
+            $queue = new RedisQueue($manager, $this->connection);
             $queue->setContainer($app);
 
             return $queue;
@@ -54,7 +62,9 @@ class Queue extends Provider
             $load = [];
 
             foreach ($queues as $name) {
-                $load[$name] = $queue->getRedis()->connection()->llen('queues:' . $name);
+                $load[$name] = $queue->getRedis()
+                    ->connection($this->connection)
+                    ->llen('queues:' . $name);
             }
         }
 

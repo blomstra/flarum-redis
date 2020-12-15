@@ -32,6 +32,6 @@ class Configuration
 
     public function toArray(): array
     {
-        return $this->config;
+        return (array) $this->config;
     }
 }
