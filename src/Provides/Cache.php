@@ -7,6 +7,7 @@ use Bokt\Redis\Manager;
 use Bokt\Redis\Overrides\RedisManager;
 use Illuminate\Cache\RedisStore;
 use Illuminate\Cache\Repository;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Redis\Factory;
 use Illuminate\Support\Arr;
@@ -21,9 +22,9 @@ class Cache extends Provider
             $manager->addConnection($this->connection, $configuration->toArray());
         });
 
-        $container->bind('cache.store', function ($app) use ($configuration) {
+        $container->bind('cache.redisstore', function ($container) use ($configuration) {
             /** @var RedisManager $manager */
-            $manager = $app->make(RedisManager::class);
+            $manager = $container->make(RedisManager::class);
 
             $store = new RedisStore(
                 $manager,
@@ -31,7 +32,13 @@ class Cache extends Provider
                 $this->connection
             );
 
-            return new Repository($store);
+            return $store;
         });
+
+        $container->bind('cache.store', function ($container) use ($configuration) {
+            return new Repository($container->make('cache.redisstore'));
+        });
+
+        $container->alias('cache.redisstore', Store::class);
     }
 }
