@@ -1,5 +1,5 @@
 {
-    "name": "bokt/flarum-redis",
+    "name": "blomstra/flarum-redis",
     "description": "Adds Redis cache and queue to Flarum",
     "keywords": [
         "extension",
