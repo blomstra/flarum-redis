@@ -1,8 +1,8 @@
 <?php
 
-namespace Bokt\Redis\Extend;
+namespace Blomstra\Redis\Extend;
 
-use Bokt\Redis\Overrides\RedisManager;
+use Blomstra\Redis\Overrides\RedisManager;
 use Flarum\Extend\ExtenderInterface;
 use Flarum\Extension\Extension;
 use Illuminate\Contracts\Container\Container;

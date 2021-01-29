@@ -1,6 +1,6 @@
 <?php /** @noinspection PhpHierarchyChecksInspection */
 
-namespace Bokt\Redis\Overrides;
+namespace Blomstra\Redis\Overrides;
 
 use Illuminate\Redis\RedisManager as IlluminateManager;
 

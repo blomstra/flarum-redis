@@ -1,10 +1,10 @@
 <?php
 
-namespace Bokt\Redis\Provides;
+namespace Blomstra\Redis\Provides;
 
-use Bokt\Redis\Configuration;
-use Bokt\Redis\Manager;
-use Bokt\Redis\Overrides\RedisManager;
+use Blomstra\Redis\Configuration;
+use Blomstra\Redis\Manager;
+use Blomstra\Redis\Overrides\RedisManager;
 use Illuminate\Cache\RedisStore;
 use Illuminate\Cache\Repository;
 use Illuminate\Contracts\Cache\Store;
@@ -14,7 +14,7 @@ use Illuminate\Support\Arr;
 
 class Cache extends Provider
 {
-    private $connection = 'bokt.cache';
+    private $connection = 'blomstra.cache';
 
     public function __invoke(Configuration $configuration, Container $container)
     {

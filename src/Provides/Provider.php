@@ -1,8 +1,8 @@
 <?php
 
-namespace Bokt\Redis\Provides;
+namespace Blomstra\Redis\Provides;
 
-use Bokt\Redis\Configuration;
+use Blomstra\Redis\Configuration;
 use Illuminate\Contracts\Container\Container;
 
 abstract class Provider

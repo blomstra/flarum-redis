@@ -1,9 +1,9 @@
 <?php
 
-namespace Bokt\Redis\Extend;
+namespace Blomstra\Redis\Extend;
 
-use Bokt\Redis\Configuration;
-use Bokt\Redis\Provides\Queue;
+use Blomstra\Redis\Configuration;
+use Blomstra\Redis\Provides\Queue;
 
 /**
  * @mixin Configuration
