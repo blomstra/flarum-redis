@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) blomstra
+Copyright (c) Bokt
 Copyright (c) Blomstra Ltd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
