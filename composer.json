@@ -17,8 +17,10 @@
     ],
     "support": {
         "issues": "https://github.com/blomstra/flarum-redis/issues",
-        "source": "https://github.com/blomstra/flarum-redis"
+        "source": "https://github.com/blomstra/flarum-redis",
+        "forum": "https://discuss.flarum.org/d/21873"
     },
+    "homepage": "https://blomstra.net",
     "require": {
         "flarum/core": "0.1.0-beta.15",
         "illuminate/redis": "*",
