@@ -1,10 +1,10 @@
 <?php
 
-namespace Bokt\Redis\Provides;
+namespace Blomstra\Redis\Provides;
 
-use Bokt\Redis\Configuration;
-use Bokt\Redis\Manager;
-use Bokt\Redis\Overrides\RedisManager;
+use Blomstra\Redis\Configuration;
+use Blomstra\Redis\Manager;
+use Blomstra\Redis\Overrides\RedisManager;
 use Flarum\Extend\Frontend;
 use Flarum\Extension\ExtensionManager;
 use Flarum\Frontend\Document;
@@ -42,7 +42,7 @@ class Queue extends Provider
         (new Frontend('admin'))
             ->js(__DIR__ . '/../../js/dist/admin.js')
             ->content([$this, 'adminWidgetAttributes'])
-            ->extend($container, $extensions->getExtension('bokt-redis'));
+            ->extend($container, $extensions->getExtension('blomstra-redis'));
 
         /** @var Dispatcher $dispatcher */
         $dispatcher = $container->make(Dispatcher::class);
@@ -56,7 +56,7 @@ class Queue extends Provider
         /** @var QueueContract $queue */
         $queue = app(QueueContract::class);
 
-        $queues = $cache->get('bokt.queue.queues-seen') ?? [];
+        $queues = $cache->get('blomstra.queue.queues-seen') ?? [];
 
         if ($queue instanceof RedisQueue) {
             $load = [];
@@ -68,8 +68,8 @@ class Queue extends Provider
             }
         }
 
-        $document->payload['boktQueuesSeen'] = $queues;
-        $document->payload['boktQueuesLoad'] = $load ?? null;
+        $document->payload['blomstraQueuesSeen'] = $queues;
+        $document->payload['blomstraQueuesLoad'] = $load ?? null;
     }
 
     public function trackQueues(Looping $event)
@@ -77,8 +77,8 @@ class Queue extends Provider
         /** @var Store $cache */
         $cache = app('cache.store');
 
-        $queues = $cache->get('bokt.queue.queues-seen') ?? [];
+        $queues = $cache->get('blomstra.queue.queues-seen') ?? [];
         $queues = array_merge($queues, (array) explode(',', $event->queue));
-        $cache->put('bokt.queue.queues-seen', array_unique($queues), 60);
+        $cache->put('blomstra.queue.queues-seen', array_unique($queues), 60);
     }
 }

@@ -2,13 +2,13 @@ import app from 'flarum/app';
 import { extend } from 'flarum/extend';
 import StatusWidget from 'flarum/components/StatusWidget';
 
-app.initializers.add('bokt-redis', () => {
+app.initializers.add('blomstra-redis', () => {
   extend(StatusWidget.prototype, 'items', items => {
-    const loads = app.data.boktQueuesLoad;
+    const loads = app.data.blomstraQueuesLoad;
 
-    for(let queue of app.data.boktQueuesSeen) {
+    for(let queue of app.data.blomstraQueuesSeen) {
         const load = loads[queue] || null;
-        items.add('bokt-queue-size-' + queue, [<strong>Queue {queue}</strong>, <br/>, load || '0']);
+        items.add('blomstra-queue-size-' + queue, [<strong>Queue {queue}</strong>, <br/>, load || '0']);
     }
   });
 });

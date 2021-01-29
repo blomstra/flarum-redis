@@ -3,7 +3,7 @@
     "description": "Adds Redis cache and queue to Flarum",
     "keywords": [
         "extension",
-        "flarum", "bokt",
+        "flarum", "blomstra",
         "queue", "cache", "redis"
     ],
     "type": "flarum-extension",
@@ -16,8 +16,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/bokt/flarum-redis/issues",
-        "source": "https://github.com/bokt/flarum-redis"
+        "issues": "https://github.com/blomstra/flarum-redis/issues",
+        "source": "https://github.com/blomstra/flarum-redis"
     },
     "require": {
         "flarum/core": "0.1.0-beta.15",
@@ -26,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Bokt\\Redis\\": "src/"
+            "Blomstra\\Redis\\": "src/"
         }
     },
     "extra": {

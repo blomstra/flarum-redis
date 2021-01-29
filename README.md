@@ -5,10 +5,10 @@ This extension allows using Redis as cache or for the queue. You can only enable
 > This is an advanced extension for webmasters able to configure redis and the queue workers.
 
 ### Installation
-Use [Bazaar](https://discuss.flarum.org/d/5151-flagrow-bazaar-the-extension-marketplace) or install manually with composer:
+Install manually with composer:
 
 ```sh
-composer require bokt/flarum-redis
+composer require blomstra/flarum-redis
 ```
 
 #### Configuring cache
@@ -18,7 +18,7 @@ In your `extend.php`:
 ```php
 
 return [
-    new Bokt\Redis\Extend\EnableRedisCache([
+    new Blomstra\Redis\Extend\EnableRedisCache([
         'host' => '127.0.0.1',
         'password' => null,
         'port' => 6379,
@@ -35,7 +35,7 @@ In your `extend.php`:
 
 ```php
 return [
-    new Bokt\Redis\Extend\EnableRedisQueue([
+    new Blomstra\Redis\Extend\EnableRedisQueue([
         'host' => '127.0.0.1',
         'password' => null,
         'port' => 6379,
@@ -44,20 +44,20 @@ return [
 ];
 ```
 
-Make sure to start your queue workers, see the [laravel documentation](https://laravel.com/docs/5.7/queues#running-the-queue-worker) for specifics. To test the worker can start use `php flarum queue:work`.
+Make sure to start your queue workers, see the [laravel documentation](https://laravel.com/docs/6.x/queues#running-the-queue-worker) for specifics. To test the worker can start use `php flarum queue:work`.
 
 If you choose to enable the queue a load counter will show up on the admin dashboard for all queues used in your queue workers.
 
 ### Updating
 
 ```sh
-composer update bokt/flarum-redis
+composer update blomstra/flarum-redis
 ```
 
 ### Links
 
-- [Packagist](https://packagist.org/packages/bokt/flarum-redis)
-- [GitHub](https://github.com/bokt/flarum-redis)
+- [Packagist](https://packagist.org/packages/blomstra/flarum-redis)
+- [GitHub](https://github.com/blomstra/flarum-redis)
 
 ### Disclaimer
 
@@ -69,13 +69,13 @@ You can combine the configuration array if you use both cache and queue:
 
 ```php
 return [
-    new Bokt\Redis\Extend\EnableRedisCache($config = [
+    new Blomstra\Redis\Extend\EnableRedisCache($config = [
         'host' => '127.0.0.1',
         'password' => null,
         'port' => 6379,
         'database' => 1,
     ]),
-    new Bokt\Redis\Extend\EnableRedisQueue($config),
+    new Blomstra\Redis\Extend\EnableRedisQueue($config),
 ];
 ```
 
