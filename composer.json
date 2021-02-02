@@ -31,6 +31,9 @@
             "Blomstra\\Redis\\": "src/"
         }
     },
+    "replace": {
+        "bokt/flarum-redis": "*"
+    },
     "extra": {
         "flarum-extension": {
             "title": "Redis",

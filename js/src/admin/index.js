@@ -1,14 +1,26 @@
 import app from 'flarum/app';
-import { extend } from 'flarum/extend';
-import StatusWidget from 'flarum/admin/components/StatusWidget';
+import RedisStatusWidget from './extend/RedisStatusWidget';
 
 app.initializers.add('blomstra-redis', () => {
-  extend(StatusWidget.prototype, 'items', items => {
-    const loads = app.data.blomstraQueuesLoad;
+    RedisStatusWidget();
 
-    for(let queue of app.data.blomstraQueuesSeen) {
-        const load = loads[queue] || null;
-        items.add('blomstra-queue-size-' + queue, [<strong>Queue {queue}</strong>, <br/>, load || '0']);
-    }
-  });
+    app.extensionData
+		.for('blomstra-redis')
+		.registerSetting({
+			setting: 'blomstra-redis.enableCache',
+			type: 'boolean',
+			label: app.translator.trans('blomstra-redis.admin.settings.enable_cache'),
+		})
+		.registerSetting({
+			setting: 'blomstra-redis.redisSessions',
+			type: 'boolean',
+			label: app.translator.trans(
+				'blomstra-redis.admin.settings.enable_redis_sessions'
+			),
+		})
+		.registerSetting({
+			setting: 'blomstra-redis.enableQueue',
+			type: 'boolean',
+			label: app.translator.trans('blomstra-redis.admin.settings.enable_queue'),
+		});
 });
