@@ -1,6 +1,6 @@
 import app from 'flarum/app';
 import { extend } from 'flarum/extend';
-import StatusWidget from 'flarum/components/StatusWidget';
+import StatusWidget from 'flarum/admin/components/StatusWidget';
 
 app.initializers.add('blomstra-redis', () => {
   extend(StatusWidget.prototype, 'items', items => {

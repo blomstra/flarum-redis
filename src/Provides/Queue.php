@@ -52,9 +52,9 @@ class Queue extends Provider
     public function adminWidgetAttributes(Document $document)
     {
         /** @var Store $cache */
-        $cache = app('cache.store');
+        $cache = resolve('cache.store');
         /** @var QueueContract $queue */
-        $queue = app(QueueContract::class);
+        $queue = resolve(QueueContract::class);
 
         $queues = $cache->get('blomstra.queue.queues-seen') ?? [];
 
@@ -75,7 +75,7 @@ class Queue extends Provider
     public function trackQueues(Looping $event)
     {
         /** @var Store $cache */
-        $cache = app('cache.store');
+        $cache = resolve('cache.store');
 
         $queues = $cache->get('blomstra.queue.queues-seen') ?? [];
         $queues = array_merge($queues, (array) explode(',', $event->queue));

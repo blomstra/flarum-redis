@@ -28,16 +28,14 @@ class Cache extends Provider
             /** @var RedisManager $manager */
             $manager = $container->make(RedisManager::class);
 
-            $store = new RedisStore(
+            return new RedisStore(
                 $manager,
                 Arr::get($configuration->toArray(), 'prefix', ''),
                 $this->connection
             );
-
-            return $store;
         });
 
-        $container->bind('cache.store', function ($container) use ($configuration) {
+        $container->extend('cache.store', function ($_, $container) use ($configuration) {
             return new Repository($container->make('cache.redisstore'));
         });
 
@@ -48,7 +46,7 @@ class Cache extends Provider
         $events->listen(ClearingCache::class, function (ClearingCache $_) {
             // This clears the cache for the text formatter which is stored in file storage
             // this is hardcoded in core because it is autoloaded using spl.
-            (new Repository(app()->make('cache.filestore')))->flush();
+            (new Repository(resolve('cache.filestore')))->flush();
         });
     }
 }

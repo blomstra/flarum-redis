@@ -19,7 +19,7 @@ abstract class RedisExtender implements ExtenderInterface
 
     public function extend(Container $container, Extension $extension = null)
     {
-        (new Bindings())->extend($container, $extension);
+        (new Bindings)->extend($container, $extension);
         (new $this->provide())($this->configuration, $container);
     }
 }
