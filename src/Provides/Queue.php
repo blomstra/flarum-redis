@@ -22,8 +22,10 @@ class Queue extends Provider
 
     public function __invoke(Configuration $configuration, Container $container)
     {
-        $container->resolving(Factory::class, function (RedisManager $manager) use ($configuration) {
+        $container->extend(Factory::class, function (RedisManager $manager) use ($configuration) {
             $manager->addConnection($this->connection, $configuration->toArray());
+
+            return $manager;
         });
 
         $container->bind('flarum.queue.connection', function ($app) {
