@@ -6,7 +6,7 @@ use Blomstra\Redis\Configuration;
 use Blomstra\Redis\Provides\Cache;
 
 /**
- * @mixin Configuration
+ * @deprecated Use \Blomstra\Redis\Extend\Redis instead
  */
 class EnableRedisCache extends RedisExtender
 {

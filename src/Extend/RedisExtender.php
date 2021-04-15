@@ -7,6 +7,9 @@ use Flarum\Extend\ExtenderInterface;
 use Flarum\Extension\Extension;
 use Illuminate\Contracts\Container\Container;
 
+/**
+ * @deprecated Use \Blomstra\Redis\Extend\Redis instead
+ */
 abstract class RedisExtender implements ExtenderInterface
 {
     protected $provide;

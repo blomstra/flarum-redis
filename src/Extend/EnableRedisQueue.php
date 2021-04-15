@@ -6,7 +6,7 @@ use Blomstra\Redis\Configuration;
 use Blomstra\Redis\Provides\Queue;
 
 /**
- * @mixin Configuration
+ * @deprecated Use \Blomstra\Redis\Extend\Redis instead
  */
 class EnableRedisQueue extends RedisExtender
 {
