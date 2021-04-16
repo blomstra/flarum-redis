@@ -32,7 +32,11 @@ class Configuration
     public static function make($config): Configuration
     {
         if (is_string($config) && !file_exists($config)) {
-            throw new InvalidArgumentException('Configuration does not exist');
+            throw new InvalidArgumentException('Configuration file does not exist');
+        }
+
+        if (! is_string($config) && ! is_array($config)) {
+            throw new InvalidArgumentException('Configuration must be either a path or an array.');
         }
 
         $config = is_string($config) ? include $config : $config;
@@ -42,7 +46,7 @@ class Configuration
 
     public function for(string $service): Configuration
     {
-        $config = (array) $this->config;
+        $config = $this->config;
 
         Arr::set(
             $config,
@@ -55,17 +59,17 @@ class Configuration
 
     public function toArray(): array
     {
-        return (array) $config;
+        return $this->config;
     }
 
-    public function useDatabaseWith(string $service, int $database)
+    public function useDatabaseWith(string $service, int $database): Configuration
     {
         $this->databases[$service] = $database;
 
         return $this;
     }
 
-    public function disable($service)
+    public function disable($service): Configuration
     {
         $service = (array) $service;
 

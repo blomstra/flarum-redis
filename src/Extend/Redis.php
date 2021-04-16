@@ -12,6 +12,8 @@ use Illuminate\Contracts\Container\Container;
  */
 class Redis implements ExtenderInterface
 {
+    protected Configuration $configuration;
+
     /**
      * @var array|string $config
      */
