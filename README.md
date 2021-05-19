@@ -1,6 +1,6 @@
-# Redis cache & queues
+# Redis cache, queues & sessions
 
-This extension allows using Redis as cache or for the queue. You can only enable the queue or cache by using a local extender (the `extend.php` in the root of your Flarum installation). See the configuring section below.
+This extension allows using Redis as cache, queue or for the sessions. You can enable these by using a local extender (the `extend.php` in the root of your Flarum installation), or by using the toggle switches provided in the admin panel. See the configuring section below.
 
 > This is an advanced extension for webmasters able to configure redis and the queue workers.
 
@@ -11,6 +11,16 @@ Install manually with composer:
 composer require blomstra/flarum-redis
 ```
 
+#### Configuration with environment variables
+
+The simplest way to create your Redis configuration is by setting the following environment variables:
+
+- `REDIS_HOST`
+- `REDIS_PASSWORD` (usually `null`)
+- `REDIS_PORT`
+- `REDIS_DATABASE`
+
+If you omit the extenders below, you may toggle each feature on/off via the admin panel. Using one or more of the extenders will override the state in the admin panel.
 #### Configuring cache
 
 In your `extend.php`:
@@ -44,7 +54,7 @@ return [
 ];
 ```
 
-Make sure to start your queue workers, see the [laravel documentation](https://laravel.com/docs/6.x/queues#running-the-queue-worker) for specifics. To test the worker can start use `php flarum queue:work`.
+Make sure to start your queue workers, see the [laravel documentation](https://laravel.com/docs/8.x/queues#running-the-queue-worker) for specifics. To test the worker can start use `php flarum queue:work`.
 
 If you choose to enable the queue a load counter will show up on the admin dashboard for all queues used in your queue workers.
 
@@ -76,6 +86,7 @@ return [
         'database' => 1,
     ]),
     new Blomstra\Redis\Extend\EnableRedisQueue($config),
+    new Blomstra\Redis\Extend\OverrideSessionHandler($config),
 ];
 ```
 
