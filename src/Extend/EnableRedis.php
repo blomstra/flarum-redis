@@ -24,7 +24,7 @@ class EnableRedis implements ExtenderInterface
         if (!empty($this->config) && Arr::get($this->config, 'host')) {
 
             /** @var SettingsRepositoryInterface */
-            $settings = app(SettingsRepositoryInterface::class);
+            $settings = resolve(SettingsRepositoryInterface::class);
 
             if ((bool) $settings->get('blomstra-redis.enableCache', false)) {
                 (new EnableRedisCache($this->config))->extend($container, $extension);
