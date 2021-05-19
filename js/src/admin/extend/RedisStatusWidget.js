@@ -1,9 +1,9 @@
-import { extend } from 'flarum/extend';
-import StatusWidget from 'flarum/components/StatusWidget';
+import { extend } from 'flarum/common/extend';
+import StatusWidget from 'flarum/admin/components/StatusWidget';
 
 export default function () {
     extend(StatusWidget.prototype, 'items', (items) => {
-        //if (app.data.blomstraQueuesSeen === undefined) { return; }
+        if (app.data.blomstraQueuesSeen === undefined) { return; }
 
         const loads = app.data.blomstraQueuesLoad;
 

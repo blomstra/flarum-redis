@@ -1,4 +1,4 @@
-import app from 'flarum/app';
+import app from 'flarum/common/app';
 import RedisStatusWidget from './extend/RedisStatusWidget';
 
 app.initializers.add('blomstra-redis', () => {
