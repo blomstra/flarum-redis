@@ -10,9 +10,9 @@ use InvalidArgumentException;
 
 class Configuration
 {
-    protected $config = [];
-    protected $databases = [];
-    protected $enabled = [
+    protected array $config = [];
+    protected array $databases = [];
+    protected array $enabled = [
         'cache' => Cache::class,
         'queue' => Queue::class,
         'session' => Session::class
@@ -48,6 +48,12 @@ class Configuration
     {
         $config = $this->config;
 
+        // In case the configuration contains a `connections` key, we'll use that.
+        if ($connection = Arr::get($config, "connections.$service")) {
+            $config = $connection;
+        }
+
+        // Override the database if `useDatabaseWith` was called.
         Arr::set(
             $config,
             'database',

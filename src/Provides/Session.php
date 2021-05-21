@@ -5,20 +5,17 @@ namespace Blomstra\Redis\Provides;
 use Blomstra\Redis\Configuration;
 use Blomstra\Redis\Manager;
 use Blomstra\Redis\Overrides\RedisManager;
-use Flarum\Extend\Frontend;
-use Flarum\Extension\ExtensionManager;
-use Flarum\Frontend\Document;
-use Illuminate\Contracts\Cache\Store;
+use Blomstra\Redis\Session\RedisSessionHandler;
+use Illuminate\Cache\RedisStore;
+use Illuminate\Cache\Repository as CacheRepository;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Container\Container;
-use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Redis\Factory;
-use Illuminate\Queue\Events\Looping;
-use Illuminate\Queue\RedisQueue;
-use Illuminate\Contracts\Queue\Queue as QueueContract;
+use Illuminate\Support\Arr;
 
 class Session extends Provider
 {
-    private $connection = 'blomstra.sessions';
+    private string $connection = 'blomstra.sessions';
 
     public function __invoke(Configuration $configuration, Container $container)
     {
@@ -32,12 +29,12 @@ class Session extends Provider
 
             return new RedisStore(
                 $manager,
-                Arr::get($config->toArray(), 'prefix', ''),
+                Arr::get($configuration->toArray(), 'prefix', ''),
                 $this->connection
             );
         });
 
-        $container->extend('session.handler', function () {
+        $container->extend('session.handler', function ($_, $container) {
             $config = $container->make(Repository::class);
 
             return new RedisSessionHandler(
