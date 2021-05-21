@@ -42,6 +42,11 @@ class Redis implements ExtenderInterface
 
     public function __call($name, $arguments)
     {
-        return call_user_func_array([$this->configuration, $name], $arguments);
+        $forwarded = call_user_func_array([$this->configuration, $name], $arguments);
+
+        // Allows chaining from the extend.php so that it doesnt return the Configuration
+        if ($forwarded instanceof Configuration) {
+            return $this;
+        }
     }
 }
