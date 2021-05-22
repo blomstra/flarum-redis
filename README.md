@@ -1,4 +1,4 @@
-# Redis cache & queues
+# Redis sessions, cache & queues
 
 This library allows using Redis as cache, session and for the queue. You can only 
 enable these services by using a local extender (the `extend.php` in 
