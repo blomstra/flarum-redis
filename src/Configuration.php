@@ -2,11 +2,21 @@
 
 namespace Blomstra\Redis;
 
+use Blomstra\Redis\Provides\Cache;
+use Blomstra\Redis\Provides\Queue;
+use Blomstra\Redis\Provides\Session;
+use Illuminate\Support\Arr;
 use InvalidArgumentException;
 
 class Configuration
 {
-    protected $config = [];
+    protected array $config = [];
+    protected array $databases = [];
+    protected array $enabled = [
+        'cache' => Cache::class,
+        'queue' => Queue::class,
+        'session' => Session::class
+    ];
 
     public function __construct(array $config = [])
     {
@@ -19,19 +29,63 @@ class Configuration
      * @param string|array $config
      * @return $this
      */
-    public function useConfig($config)
+    public static function make($config): Configuration
     {
         if (is_string($config) && !file_exists($config)) {
-            throw new InvalidArgumentException('Configuration does not exist');
+            throw new InvalidArgumentException('Configuration file does not exist');
         }
 
-        $this->config = is_string($config) ? include $config : $config;
+        if (! is_string($config) && ! is_array($config)) {
+            throw new InvalidArgumentException('Configuration must be either a path or an array.');
+        }
 
-        return $this;
+        $config = is_string($config) ? include $config : $config;
+
+        return new static($config);
+    }
+
+    public function for(string $service): Configuration
+    {
+        $config = $this->config;
+
+        // In case the configuration contains a `connections` key, we'll use that.
+        if ($connection = Arr::get($config, "connections.$service")) {
+            $config = $connection;
+        }
+
+        // Override the database if `useDatabaseWith` was called.
+        Arr::set(
+            $config,
+            'database',
+            Arr::get($this->databases, $service, $config['database'])
+        );
+
+        return new Configuration($config);
     }
 
     public function toArray(): array
     {
-        return (array) $this->config;
+        return $this->config;
+    }
+
+    public function useDatabaseWith(string $service, int $database): Configuration
+    {
+        $this->databases[$service] = $database;
+
+        return $this;
+    }
+
+    public function disable($service): Configuration
+    {
+        $service = (array) $service;
+
+        Arr::forget($this->enabled, $service);
+
+        return $this;
+    }
+
+    public function enabled(): array
+    {
+        return $this->enabled;
     }
 }
