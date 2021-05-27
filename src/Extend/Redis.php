@@ -12,7 +12,7 @@ use Illuminate\Contracts\Container\Container;
  */
 class Redis implements ExtenderInterface
 {
-    protected Configuration $configuration;
+    protected $configuration;
 
     /**
      * @var array|string $config

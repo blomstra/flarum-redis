@@ -10,9 +10,9 @@ use InvalidArgumentException;
 
 class Configuration
 {
-    protected array $config = [];
-    protected array $databases = [];
-    protected array $enabled = [
+    protected $config = [];
+    protected $databases = [];
+    protected $enabled = [
         'cache' => Cache::class,
         'queue' => Queue::class,
         'session' => Session::class

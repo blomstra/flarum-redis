@@ -15,7 +15,7 @@ use Illuminate\Support\Arr;
 
 class Session extends Provider
 {
-    private string $connection = 'blomstra.sessions';
+    private $connection = 'blomstra.sessions';
 
     public function __invoke(Configuration $configuration, Container $container)
     {

@@ -16,7 +16,7 @@ use Illuminate\Support\Arr;
 
 class Cache extends Provider
 {
-    private string $connection = 'blomstra.cache';
+    private $connection = 'blomstra.cache';
 
     public function __invoke(Configuration $configuration, Container $container)
     {

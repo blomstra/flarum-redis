@@ -11,7 +11,7 @@ use Illuminate\Queue\RedisQueue;
 
 class Queue extends Provider
 {
-    private string $connection = 'default';
+    private $connection = 'default';
 
     public function __invoke(Configuration $configuration, Container $container)
     {
