@@ -64,8 +64,8 @@ class Configuration
         );
 
         if (Arr::get($config, 'options.replication')
-                && ! Str::contains(Arr::get($config, 'options.service', '/'), '/')
-                && $service = Arr::get($config, 'options.service')) {
+            && ! Str::contains(Arr::get($config, 'options.service', '/'), '/')
+            && $service = Arr::get($config, 'options.service')) {
 
             Arr::set($config, 'options.service', "tcp://$service/$useDatabase");
         }
