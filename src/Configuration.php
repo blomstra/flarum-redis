@@ -54,7 +54,7 @@ class Configuration
             $config = $connection;
         }
 
-        $useDatabase = Arr::get($this->databases, $service, $config['database']);
+        $useDatabase = Arr::get($this->databases, $service, $config['database'] ?? 0);
 
         // Override the database if `useDatabaseWith` was called.
         Arr::set(
