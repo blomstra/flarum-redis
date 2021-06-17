@@ -67,7 +67,7 @@ class Configuration
             && ! Str::contains(Arr::get($config, 'options.service', '/'), '/')
             && $service = Arr::get($config, 'options.service')) {
 
-            Arr::set($config, 'options.service', "tcp://$service/$useDatabase");
+            Arr::set($config, 'options.service', "tcp://$service/$useDatabase?alias=master");
         }
 
         return new Configuration($config);
