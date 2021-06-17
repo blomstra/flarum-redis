@@ -98,13 +98,13 @@ return [
 ```php
 return [
     (new Blomstra\Redis\Extend\Redis([
-        'host' => ['127.0.0.1', '127.0.0.2'],
+        'host' => '127.0.0.1',
         'password' => null,
         'port' => 6379,
         'database' => 1,
         'options' => [
           'replication' => 'sentinel',
-          'service' => 'mymaster',
+          'service' => 'mymaster:26379',
         ]
     ]))
     ->useDatabaseWith('cache', 1)

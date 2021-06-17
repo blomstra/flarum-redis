@@ -9,7 +9,7 @@ class RedisManager extends IlluminateManager
 {
     public function addConnection(string $name, array $config)
     {
-        if (is_array($config['host']) || Arr::get($config, 'options.replication')) {
+        if (Arr::get($config, 'options.replication')) {
             $this->config['clusters'][$name] = [$config];
         } else {
             $this->config[$name] = $config;

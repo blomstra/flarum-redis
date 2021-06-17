@@ -6,6 +6,7 @@ use Blomstra\Redis\Provides\Cache;
 use Blomstra\Redis\Provides\Queue;
 use Blomstra\Redis\Provides\Session;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 class Configuration
@@ -53,12 +54,21 @@ class Configuration
             $config = $connection;
         }
 
+        $useDatabase = Arr::get($this->databases, $service, $config['database']);
+
         // Override the database if `useDatabaseWith` was called.
         Arr::set(
             $config,
             'database',
-            Arr::get($this->databases, $service, $config['database'])
+            $useDatabase
         );
+
+        if (Arr::get($config, 'options.replication')
+                && ! Str::contains(Arr::get($config, 'options.service', '/'), '/')
+                && $service = Arr::get($config, 'options.service')) {
+
+            Arr::set($config, 'options.service', "tcp://$service/$useDatabase");
+        }
 
         return new Configuration($config);
     }
