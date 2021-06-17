@@ -23,7 +23,7 @@ return [
         'host' => '127.0.0.1',
         'password' => null,
         'port' => 6379,
-        'database' => 1,
+        'database' => 1
     ])
 ];
 ```
@@ -90,6 +90,26 @@ return [
             ],
         ],
     ]))
+];
+```
+
+4. Use a cluster:
+
+```php
+return [
+    (new Blomstra\Redis\Extend\Redis([
+        'host' => ['127.0.0.1', '127.0.0.2'],
+        'password' => null,
+        'port' => 6379,
+        'database' => 1,
+        'options' => [
+          'replication' => 'sentinel',
+          'service' => 'mymaster',
+        ]
+    ]))
+    ->useDatabaseWith('cache', 1)
+    ->useDatabaseWith('queue', 2)
+    ->useDatabaseWith('session', 3)
 ];
 ```
 
