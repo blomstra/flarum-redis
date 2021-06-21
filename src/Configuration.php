@@ -6,7 +6,6 @@ use Blomstra\Redis\Provides\Cache;
 use Blomstra\Redis\Provides\Queue;
 use Blomstra\Redis\Provides\Session;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 class Configuration
@@ -64,13 +63,6 @@ class Configuration
         );
 
         if (empty($config['password'])) Arr::forget($config, 'password');
-
-        if (Arr::get($config, 'options.replication')
-            && ! Str::contains(Arr::get($config, 'options.service', '/'), '/')
-            && $service = Arr::get($config, 'options.service')) {
-
-            Arr::set($config, 'options.service', "tcp://$service/$useDatabase?alias=master");
-        }
 
         return new Configuration($config);
     }
