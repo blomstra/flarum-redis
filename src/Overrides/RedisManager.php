@@ -14,7 +14,6 @@ class RedisManager extends IlluminateManager
         } else {
             $this->config[$name] = $config;
         }
-
         return $this;
     }
 

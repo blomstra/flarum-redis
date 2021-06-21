@@ -63,6 +63,8 @@ class Configuration
             $useDatabase
         );
 
+        if (empty($config['password'])) Arr::forget($config, 'password');
+
         if (Arr::get($config, 'options.replication')
             && ! Str::contains(Arr::get($config, 'options.service', '/'), '/')
             && $service = Arr::get($config, 'options.service')) {
