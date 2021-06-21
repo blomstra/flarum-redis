@@ -3,7 +3,6 @@
 namespace Blomstra\Redis\Provides;
 
 use Blomstra\Redis\Configuration;
-use Blomstra\Redis\Manager;
 use Blomstra\Redis\Overrides\RedisManager;
 use Blomstra\Redis\Session\RedisSessionHandler;
 use Illuminate\Cache\RedisStore;
@@ -12,6 +11,7 @@ use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Redis\Factory;
 use Illuminate\Support\Arr;
+use SessionHandlerInterface;
 
 class Session extends Provider
 {
@@ -19,13 +19,13 @@ class Session extends Provider
 
     public function __invoke(Configuration $configuration, Container $container)
     {
-        $container->resolving(Factory::class, function (RedisManager $manager) use ($configuration) {
+        $container->resolving(Factory::class, function (Factory $manager) use ($configuration) {
             $manager->addConnection($this->connection, $configuration->toArray());
         });
 
         $container->singleton('session.redisstore', function ($container) use ($configuration) {
             /** @var RedisManager $manager */
-            $manager = $container->make(RedisManager::class);
+            $manager = $container->make(Factory::class);
 
             return new RedisStore(
                 $manager,
@@ -34,7 +34,7 @@ class Session extends Provider
             );
         });
 
-        $container->extend('session.handler', function ($_, $container) {
+        $container->singleton('session.handler', function ($container) {
             $config = $container->make(Repository::class);
 
             return new RedisSessionHandler(

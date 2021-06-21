@@ -3,7 +3,6 @@
 namespace Blomstra\Redis\Provides;
 
 use Blomstra\Redis\Configuration;
-use Blomstra\Redis\Manager;
 use Blomstra\Redis\Overrides\RedisManager;
 use Flarum\Foundation\Event\ClearingCache;
 use Illuminate\Cache\RedisStore;
@@ -20,13 +19,13 @@ class Cache extends Provider
 
     public function __invoke(Configuration $configuration, Container $container)
     {
-        $container->resolving(Factory::class, function (RedisManager $manager) use ($configuration) {
+        $container->resolving(Factory::class, function (Factory $manager) use ($configuration) {
             $manager->addConnection($this->connection, $configuration->toArray());
         });
 
         $container->bind('cache.redisstore', function ($container) use ($configuration) {
             /** @var RedisManager $manager */
-            $manager = $container->make(RedisManager::class);
+            $manager = $container->make(Factory::class);
 
             return new RedisStore(
                 $manager,

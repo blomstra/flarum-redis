@@ -3,7 +3,6 @@
 namespace Blomstra\Redis\Provides;
 
 use Blomstra\Redis\Configuration;
-use Blomstra\Redis\Manager;
 use Blomstra\Redis\Overrides\RedisManager;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Redis\Factory;
@@ -15,7 +14,7 @@ class Queue extends Provider
 
     public function __invoke(Configuration $configuration, Container $container)
     {
-        $container->resolving(Factory::class, function (RedisManager $manager) use ($configuration) {
+        $container->resolving(Factory::class, function (Factory $manager) use ($configuration) {
             $manager->addConnection($this->connection, $configuration->toArray());
         });
 
