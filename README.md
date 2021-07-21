@@ -134,3 +134,4 @@ composer update blomstra/flarum-redis
 
 - Blomstra provides managed Flarum hosting.
 - https://blomstra.net
+- https://blomstra.community/t/ext-cache-assets
