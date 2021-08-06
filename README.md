@@ -119,11 +119,42 @@ Make sure to start your queue workers, see
 the [laravel documentation](https://laravel.com/docs/6.x/queues#running-the-queue-worker) for specifics. 
 To test the worker can start use `php flarum queue:work`.
 
+##### Queue options
+
+The queue allows for several options to be added, retry_after, block_for and after_commit. You can set these
+by adding a `queue` array in the configuration:
+
+```php
+return [
+    (new Blomstra\Redis\Extend\Redis([
+        'host' => '127.0.0.1',
+        'password' => null,
+        'port' => 6379,
+        'database' => 1,
+        'queue' => [
+            'retry_after' => 120, // seconds
+            'block_for' => 5, // seconds
+            'after_commit' => true 
+        ]       
+    ]))
+    ->useDatabaseWith('cache', 1)
+    ->useDatabaseWith('queue', 2)
+    ->useDatabaseWith('session', 3)
+];
+```
+
+You can read up on the meaning of these options in the [Laravel Documentation](https://laravel.com/docs/8.x/queues#redis).
+
 ### Updating
 
 ```sh
 composer update blomstra/flarum-redis
 ```
+
+### FAQ
+
+*Why are there still files in storage/cache?*
+Some code still relies on physical files being present. This includes the formatter cache and the view caches.
 
 ### Links
 
