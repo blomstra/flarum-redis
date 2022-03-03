@@ -20,6 +20,7 @@ class Cache extends Provider
     public function __invoke(Configuration $configuration, Container $container)
     {
         $container->resolving(Factory::class, function (Factory $manager) use ($configuration) {
+            /** @var RedisManager $manager */
             $manager->addConnection($this->connection, $configuration->toArray());
         });
 
