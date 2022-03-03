@@ -1,4 +1,14 @@
-<?php /** @noinspection PhpHierarchyChecksInspection */
+<?php
+
+/*
+ * This file is part of blomstra/flarum-redis.
+ *
+ * Copyright (c) Bokt.
+ * Copyright (c) Blomstra Ltd.
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
 
 namespace Blomstra\Redis\Overrides;
 
@@ -14,6 +24,7 @@ class RedisManager extends IlluminateManager
         } else {
             $this->config[$name] = $config;
         }
+
         return $this;
     }
 

@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of blomstra/flarum-redis.
+ *
+ * Copyright (c) Bokt.
+ * Copyright (c) Blomstra Ltd.
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
 namespace Blomstra\Redis\Extend;
 
 use Blomstra\Redis\Configuration;
@@ -15,7 +25,7 @@ class Redis implements ExtenderInterface
     protected $configuration;
 
     /**
-     * @var array|string $config
+     * @var array|string
      */
     public function __construct($config)
     {
@@ -28,16 +38,15 @@ class Redis implements ExtenderInterface
 
         // Add bindings only if any of the redis services are requested.
         if (count($services)) {
-            (new Bindings)->extend($container, $extension);
+            (new Bindings())->extend($container, $extension);
         }
 
         foreach ($services as $service => $class) {
-            (new $class)(
+            (new $class())(
                 $this->configuration->for($service),
                 $container
             );
         }
-
     }
 
     public function __call($name, $arguments)

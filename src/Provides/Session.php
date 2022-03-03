@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of blomstra/flarum-redis.
+ *
+ * Copyright (c) Bokt.
+ * Copyright (c) Blomstra Ltd.
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
 namespace Blomstra\Redis\Provides;
 
 use Blomstra\Redis\Configuration;
@@ -20,6 +30,7 @@ class Session extends Provider
     public function __invoke(Configuration $configuration, Container $container)
     {
         $container->resolving(Factory::class, function (Factory $manager) use ($configuration) {
+            /** @var RedisManager $manager */
             $manager->addConnection($this->connection, $configuration->toArray());
         });
 

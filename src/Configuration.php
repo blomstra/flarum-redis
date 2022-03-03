@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of blomstra/flarum-redis.
+ *
+ * Copyright (c) Bokt.
+ * Copyright (c) Blomstra Ltd.
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
 namespace Blomstra\Redis;
 
 use Blomstra\Redis\Provides\Cache;
@@ -13,9 +23,9 @@ class Configuration
     protected $config = [];
     protected $databases = [];
     protected $enabled = [
-        'cache' => Cache::class,
-        'queue' => Queue::class,
-        'session' => Session::class
+        'cache'   => Cache::class,
+        'queue'   => Queue::class,
+        'session' => Session::class,
     ];
 
     public function __construct(array $config = [])
@@ -27,6 +37,7 @@ class Configuration
      * Set Redis configuration from file or by providing a configuration array.
      *
      * @param string|array $config
+     *
      * @return $this
      */
     public static function make($config): Configuration
@@ -35,7 +46,7 @@ class Configuration
             throw new InvalidArgumentException('Configuration file does not exist');
         }
 
-        if (! is_string($config) && ! is_array($config)) {
+        if (!is_string($config) && !is_array($config)) {
             throw new InvalidArgumentException('Configuration must be either a path or an array.');
         }
 
@@ -62,7 +73,9 @@ class Configuration
             $useDatabase
         );
 
-        if (empty($config['password'])) Arr::forget($config, 'password');
+        if (empty($config['password'])) {
+            Arr::forget($config, 'password');
+        }
 
         return new Configuration($config);
     }
