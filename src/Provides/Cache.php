@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of blomstra/flarum-redis.
+ *
+ * Copyright (c) Bokt.
+ * Copyright (c) Blomstra Ltd.
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
 namespace Blomstra\Redis\Provides;
 
 use Blomstra\Redis\Configuration;
@@ -35,7 +45,7 @@ class Cache extends Provider
             );
         });
 
-        $container->extend('cache.store', function ($_, $container) use ($configuration) {
+        $container->extend('cache.store', function ($_, $container) {
             return new Repository($container->make('cache.redisstore'));
         });
 
