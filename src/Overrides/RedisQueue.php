@@ -25,6 +25,6 @@ class RedisQueue extends IlluminateQueue
             $queue = $job->queue;
         }
 
-        parent::push($job, $data, $queue);
+        return parent::push($job, $data, $queue);
     }
 }
