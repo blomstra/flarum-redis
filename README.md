@@ -55,8 +55,7 @@ return [
     (new Blomstra\Redis\Extend\Redis([
         'host' => '127.0.0.1',
         'password' => null,
-        'port' => 6379,
-        'database' => 1,
+        'port' => 6379
     ]))
     ->useDatabaseWith('cache', 1)
     ->useDatabaseWith('queue', 2)
@@ -101,7 +100,6 @@ return [
         'host' => '127.0.0.1',
         'password' => null,
         'port' => 6379,
-        'database' => 1,
         'options' => [
           'replication' => 'sentinel',
           'service' => 'mymaster:26379',
